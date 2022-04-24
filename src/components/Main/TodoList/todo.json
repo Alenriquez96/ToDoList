@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Hacer deberes",
+        "description": "Hacer todos los deberes de React"
+    },
+    {
+        "title": "Lavar ropa",
+        "description": "Lavar la ropa para toda la semana"
+    },
+    {
+        "title": "Hacer la compra",
+        "description": "Comprar cosas para toda la semana"
+    }
+]
