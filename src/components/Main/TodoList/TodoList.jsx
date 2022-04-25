@@ -8,23 +8,40 @@ class TodoList extends Component {
 
     this.state = {
       todos: dataToDo,
-      lastToDo:{}
+      lastToDo:{},
+      title:"",
+      description:""
     }
   }
 
   addToDo = (event) =>{
     event.preventDefault();
-    const todoTitle = event.target.title.value
-    const todoDesc = event.target.description.value
+    let title = event.target.title.value
+    let description = event.target.desc.value
+    event.target.enviar.style.display ="none"
+    
+    event.target.title.value=""
+    event.target.desc.value=""
 
-    const newTodo = {todoTitle,todoDesc}
+
+
+    const newTodo = {title,description}
+
+
 
     this.setState({lastToDo:newTodo});  
 
-    this.setState({todos:[...this.state.todos,newTodo]})
+    this.setState({todos:[ newTodo,...this.state.todos]})
   }
 
-  paintTodos =()=>this.state.todos.map((todo,i)=><TodoItem data={todo} key={i}/>) 
+  handleChangeTitle = (event)=>this.setState({
+    title: event.target.value });
+  
+  handleChangeDescription = (event)=>this.setState({description: event.target.value});
+
+  paintTodos =()=>{
+    return this.state.todos.map((todo,i)=><TodoItem data={todo} key={i} remove={()=>this.removeToDo(i)}/>)
+   }
 
   removeAllToDo=()=>{
     this.setState({todos:[]})
@@ -35,7 +52,7 @@ class TodoList extends Component {
     this.setState({todos:remainingToDo})
   }
 
-  resetCakes = () =>{
+  resetToDos = () =>{
     this.setState({todos:dataToDo})    
   }
   
@@ -46,14 +63,17 @@ class TodoList extends Component {
       <div>
         <form onSubmit={this.addToDo}>
           <label htmlFor="title">Título:</label>
-          <input type="text" name="title" id="title"/><br/>
-          <label htmlFor="description">Descripción:</label>
-          <input type="text" name="description" id="description" /><br/>  
+          <input type="text" name="title" className="input" id="title" onChange={this.handleChangeTitle}/><br/>
+          <label htmlFor="desc">Descripción:</label>
+          <input type="text" name="desc" className="input" id="desc" onChange={this.handleChangeDescription}/><br/>  
+          {
+          this.state.title!==""&&this.state.description!==""?
+          <input type="submit" name="enviar" value="Añadir To-Do"/>
+          :""}
         </form>
         {this.paintTodos()}
-        <button onClick={this.addToDo}>Añade un To-Do</button>
         <button onClick={this.removeAllToDo}>Borrar todos los To-Do</button>
-        <button onClick={this.resetCakes}>Recargar To-Do</button>
+        <button onClick={this.resetToDos}>Recargar To-Do</button>
 
         {
           title&&description?
