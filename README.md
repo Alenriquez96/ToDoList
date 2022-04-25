@@ -1,4 +1,3 @@
-
 Un formulario con input + botón
 Un componente List que recorra una lista de items
 Un componente Item o Card que contenga cada TO DO
